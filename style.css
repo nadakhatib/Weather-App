@@ -1,0 +1,559 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-image: url('images/background2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    transition: all 0.3s ease;
+}
+
+/* طبقة داكنة فوق الخريطة عشان النص يبان */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 0;
+    transition: all 0.3s ease;
+}
+
+/* ===== الوضع النهاري (ألوان مريحة باستيل) ===== */
+body.light-mode::before {
+    background: rgba(250, 249, 248, 0.3);
+}
+
+body.light-mode .container {
+    background: rgba(250, 249, 248, 0.92);
+}
+
+/* ألوان مريحة باستيل */
+body.light-mode h1 {
+    color: #6c9ebf !important;
+    text-shadow: none;
+    font-weight: 600;
+}
+
+body.light-mode .city-name {
+    color: #5a7d9a !important;
+    text-shadow: none;
+}
+
+body.light-mode .temp {
+    color: #8ba8c4 !important;
+    text-shadow: none;
+    font-size: 2.2rem;
+}
+
+body.light-mode .description {
+    color: #7a8b9b !important;
+    text-shadow: none;
+}
+
+body.light-mode .forecast-day .day {
+    color: #6c9ebf !important;
+    text-shadow: none;
+}
+
+body.light-mode .forecast-temp {
+    color: #8ba8c4 !important;
+    text-shadow: none;
+}
+
+body.light-mode .forecast-title {
+    color: #6c9ebf !important;
+    text-shadow: none;
+}
+
+body.light-mode .forecast-desc {
+    color: #9aaebf !important;
+    text-shadow: none;
+}
+
+body.light-mode .details div {
+    color: #6c9ebf !important;
+    background: rgba(255, 255, 255, 0.75);
+    text-shadow: none;
+}
+
+body.light-mode .details div .label {
+    color: #b0c4d4 !important;
+}
+
+body.light-mode .loading,
+body.light-mode .error-message {
+    color: #7a8b9b !important;
+}
+
+body.light-mode .forecast-day {
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(200, 210, 220, 0.3);
+}
+
+/* الأزرار في الوضع النهاري */
+body.light-mode .unit-toggle button,
+body.light-mode .theme-btn,
+body.light-mode .share-btn {
+    background: rgba(220, 230, 240, 0.6);
+    color: #6c9ebf;
+    border-color: rgba(150, 170, 190, 0.3);
+}
+
+body.light-mode .unit-toggle button.unit-active {
+    background: #8ba8c4;
+    color: white;
+}
+
+body.light-mode #searchBtn {
+    background: rgba(200, 215, 225, 0.6);
+    color: #6c9ebf;
+    border-color: rgba(150, 170, 190, 0.3);
+}
+
+body.light-mode #searchBtn:hover {
+    background: rgba(180, 200, 215, 0.8);
+    transform: scale(1.02);
+}
+
+body.light-mode #cityInput {
+    background: rgba(255, 255, 255, 0.85);
+    color: #5a7a9a;
+    border-color: rgba(180, 195, 210, 0.5);
+}
+
+body.light-mode #cityInput::placeholder {
+    color: #b0c4d4;
+}
+
+body.light-mode .weather-main-info > div {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(4px);
+}
+
+body.light-mode .details > div {
+    background: rgba(255, 255, 255, 0.65);
+}
+
+body.light-mode .forecast-section {
+    background: rgba(255, 255, 255, 0.55);
+}
+
+/* الحاوية الرئيسية */
+.container {
+    position: relative;
+    z-index: 1;
+    background: rgba(10, 20, 35, 0.7);
+    backdrop-filter: blur(12px);
+    border-radius: 28px;
+    padding: 22px 20px;
+    width: 100%;
+    max-width: 750px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+h1 {
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    font-size: 1.7rem;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+}
+
+.search-box {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+#cityInput {
+    flex: 1;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+#cityInput::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+#cityInput:focus {
+    border-color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+#searchBtn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 12px 32px;
+    font-size: 0.95rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    min-width: 110px;
+    backdrop-filter: blur(5px);
+    transition: all 0.2s;
+}
+
+#searchBtn:hover {
+    background: rgba(255, 255, 255, 0.35);
+    transform: scale(1.02);
+}
+
+/* صف الأزرار */
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+}
+
+/* وحدة القياس */
+.unit-toggle {
+    display: flex;
+    gap: 15px;
+}
+
+.unit-toggle button {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 7px 22px;
+    font-size: 0.9rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    backdrop-filter: blur(5px);
+    transition: all 0.2s;
+}
+
+.unit-toggle button.unit-active {
+    background: rgba(255, 255, 255, 0.35);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* زر الوضع */
+.theme-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 7px 22px;
+    font-size: 0.9rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    backdrop-filter: blur(5px);
+    transition: all 0.2s;
+}
+
+.theme-btn:hover {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+/* المشاركة */
+.share-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 20px;
+    font-size: 0.85rem;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    transition: all 0.2s;
+    width: 100%;
+    max-width: 200px;
+}
+
+.share-btn:hover {
+    background: rgba(255, 255, 255, 0.35);
+    transform: scale(1.02);
+}
+
+/* الصف العلوي */
+.weather-main-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.weather-main-info > div {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    padding: 14px 8px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.city-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.temp {
+    font-size: 1.9rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.sky-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.sky-info img {
+    width: 38px;
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+}
+
+.description {
+    font-size: 0.85rem;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    text-transform: capitalize;
+}
+
+/* التفاصيل */
+.details {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.details > div {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+    padding: 12px 6px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.details div .label {
+    font-size: 0.68rem;
+    font-weight: normal;
+    color: rgba(255, 255, 255, 0.8);
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* توقعات 5 أيام */
+.forecast-section {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    border-radius: 22px;
+    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.forecast-title {
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.forecast-days {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.forecast-day {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    border-radius: 16px;
+    padding: 10px 5px;
+    flex: 1;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.forecast-day .day {
+    font-weight: bold;
+    color: white;
+    font-size: 0.72rem;
+    margin-bottom: 5px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.forecast-day img {
+    width: 30px;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
+}
+
+.forecast-day .forecast-temp {
+    font-size: 0.88rem;
+    font-weight: bold;
+    color: white;
+    margin: 5px 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.forecast-desc {
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* ===== الخريطة ===== */
+.map-container {
+    margin-top: 20px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    height: 250px;
+    width: 100%;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+/* ===== تلوين أيقونات التوقعات ===== */
+
+/* الشمس - أصفر */
+.forecast-day img[src*="01d"],
+.forecast-day img[src*="01n"] {
+    filter: brightness(0) saturate(100%) invert(79%) sepia(89%) saturate(2000%) hue-rotate(0deg) brightness(105%);
+}
+
+/* الغيم - أبيض */
+.forecast-day img[src*="02d"], .forecast-day img[src*="02n"],
+.forecast-day img[src*="03d"], .forecast-day img[src*="03n"],
+.forecast-day img[src*="04d"], .forecast-day img[src*="04n"] {
+    filter: brightness(0) invert(1);
+}
+
+/* المطر - أزرق فاتح */
+.forecast-day img[src*="09d"], .forecast-day img[src*="09n"],
+.forecast-day img[src*="10d"], .forecast-day img[src*="10n"],
+.forecast-day img[src*="11d"], .forecast-day img[src*="11n"] {
+    filter: brightness(0) saturate(100%) invert(70%) sepia(100%) saturate(500%) hue-rotate(180deg);
+}
+
+/* الثلج - أزرق بنفسجي */
+.forecast-day img[src*="13d"], .forecast-day img[src*="13n"] {
+    filter: brightness(0) saturate(100%) invert(80%) sepia(30%) saturate(1000%) hue-rotate(200deg);
+}
+
+/* الضباب - رمادي فاتح */
+.forecast-day img[src*="50d"], .forecast-day img[src*="50n"] {
+    filter: brightness(0) invert(0.7);
+}
+
+/* ===== تلوين أيقونة الطقس الحالي ===== */
+
+/* الشمس - أصفر */
+#weatherIcon[src*="01d"], #weatherIcon[src*="01n"] {
+    filter: brightness(0) saturate(100%) invert(79%) sepia(89%) saturate(2000%) hue-rotate(0deg) brightness(105%);
+}
+
+/* الغيم - أبيض */
+#weatherIcon[src*="02d"], #weatherIcon[src*="02n"],
+#weatherIcon[src*="03d"], #weatherIcon[src*="03n"],
+#weatherIcon[src*="04d"], #weatherIcon[src*="04n"] {
+    filter: brightness(0) invert(1);
+}
+
+/* المطر - أزرق فاتح */
+#weatherIcon[src*="09d"], #weatherIcon[src*="09n"],
+#weatherIcon[src*="10d"], #weatherIcon[src*="10n"] {
+    filter: brightness(0) saturate(100%) invert(70%) sepia(100%) saturate(500%) hue-rotate(180deg);
+}
+
+/* العواصف الرعدية - أرجواني */
+#weatherIcon[src*="11d"], #weatherIcon[src*="11n"] {
+    filter: brightness(0) saturate(100%) invert(50%) sepia(100%) saturate(1000%) hue-rotate(250deg);
+}
+
+.error-message, .loading {
+    color: white;
+    padding: 12px;
+}
+
+/* جوال */
+@media (max-width: 650px) {
+    .container {
+        padding: 18px 15px;
+    }
+    
+    .weather-main-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .weather-main-info > div {
+        width: 100%;
+    }
+    
+    .details {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .forecast-days {
+        flex-wrap: wrap;
+    }
+    
+    .search-box {
+        flex-direction: column;
+    }
+    
+    .temp {
+        font-size: 1.5rem;
+    }
+    
+    .city-name {
+        font-size: 0.95rem;
+    }
+    
+    .button-row {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .share-btn {
+        max-width: 100%;
+    }
+}

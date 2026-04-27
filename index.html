@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Leaflet CSS للخريطة -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+
+    <div class="container">
+        
+        <h1>🌤️ Weather App</h1>
+
+        <div class="search-box">
+            <input type="text" id="cityInput" placeholder="Enter city name...">
+            <button id="searchBtn">Search</button>
+        </div>
+
+        <!-- الأزرار -->
+        <div class="button-row">
+            <div class="unit-toggle">
+                <button id="celsiusBtn" class="unit-active">°C</button>
+                <button id="fahrenheitBtn">°F</button>
+            </div>
+            <button id="themeBtn" class="theme-btn">🌙 Dark</button>
+        </div>
+
+        <!-- المنطقة العلوية: المدينة، الحرارة، السماء (جنب بعض) -->
+        <div class="weather-main-info" id="weatherMainInfo">
+            <div class="city-info">
+                <div class="city-name" id="cityName">📍 Gaza, PS</div>
+            </div>
+            <div class="temp-info">
+                <div class="temp" id="temp">🌡️ 18°C</div>
+            </div>
+            <div class="sky-info" id="skyInfo">
+                <img id="weatherIcon" src="https://openweathermap.org/img/wn/01d@2x.png" width="40">
+                <div class="description" id="description">clear sky</div>
+            </div>
+        </div>
+
+        <!-- التفاصيل (الرطوبة، الرياح، الشعور) -->
+        <div class="details" id="details">
+            <div><span class="label">💧 Humidity</span> <span id="humidity">--</span>%</div>
+            <div><span class="label">💨 Wind</span> <span id="wind">--</span> <span id="windUnit">m/s</span></div>
+            <div><span class="label">🔥 Feels Like</span> <span id="feelsLike">--</span>°C</div>
+        </div>
+
+        <!-- توقعات 5 أيام -->
+        <div class="forecast-section">
+            <div id="forecastResult">
+                <div class="loading">📅 5-Day Forecast will appear here</div>
+            </div>
+        </div>
+
+        <!-- زر المشاركة -->
+        <button id="shareBtn" class="share-btn">📤 Share Weather</button>
+
+        <!-- الخريطة -->
+        <div id="map" class="map-container"></div>
+
+    </div>
+
+    <!-- Leaflet JS للخريطة -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
