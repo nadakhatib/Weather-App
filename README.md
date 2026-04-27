@@ -2,7 +2,6 @@
 
 A weather app that shows current weather and 5-day forecast for any city.
 
-![Weather App Screenshot](images/screenshot.png)
 
 ## Features
 
